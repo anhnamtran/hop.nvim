@@ -112,14 +112,15 @@ local function set_unmatched_lines(buf_handle, hl_ns, top_line, bottom_line, cur
     end_line = end_line,
     hl_group = 'HopUnmatched',
     hl_eol = true,
-    priority = prio.DIM_PRIO
+    priority = prio.DIM_PRIO,
+    strict = false,
   }
 
   if end_col then
     local current_line = vim.api.nvim_buf_get_lines(buf_handle, cursor_pos[1] - 1, cursor_pos[1], true)[1]
     local current_width = vim.fn.strdisplaywidth(current_line)
 
-    if end_col > current_width then
+    if current_width ~= 0 and end_col > current_width then
       end_col = current_width - 1
     end
 
